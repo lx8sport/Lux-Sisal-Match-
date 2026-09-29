@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lux Statistica Vincente</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    background: #0B0F19;
+    color: #FFFFFF;
+    padding: 15px 10px;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    background: #151D30;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #00F2FE;
+}
+
+.section-title {
+    font-size: 0.8rem;
+    color: #00F2FE;
+    margin: 12px 0 9px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+label {
+    font-size: 0.75rem;
+    color: #8E9BB4;
+    margin-bottom: 4px;
+}
+
+input {
+    width: 100%;
+    background: #1E2942;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+}
+
+input:focus {
+    border-color: #00F2FE;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+button {
+    width: 100%;
+    min-height: 48px;
+    padding: 13px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+}
+
+.btn-submit {
+    background: #05FFC4;
+    color: #000000;
+}
+
+.btn-pdf {
+    background: #1E2942;
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* =========================
+   PROGRESSO
+========================= */
+
+.progress-box {
+    display: none;
+    background: #1E2942;
+    padding: 14px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.progress-text {
+    font-size: 0.78rem;
+    color: #8E9BB4;
+}
+
+.progress-percent {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #05FFC4;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #0B0F19;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        #05FFC4,
+        #00F2FE
+    );
+    border-radius: 8px;
+    transition: width 0.08s linear;
+}
+
+.progress-status {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #8E9BB4;
+}
+
+/* =========================
+   RISULTATI
+========================= */
+
+.results-box {
+    display: none;
+    margin-top: 15px;
+}
+
+.match-info {
+    background: #1E2942;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.match-teams {
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+.market-info {
+    margin-top: 6px;
+    font-size: 0.7rem;
+    color: #8E9BB4;
+}
+
+.result-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.result-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.score {
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+.percentage {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #05FFC4;
+}
+
+.result-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: #0B0F19;
+    border-radius: 5px;
+    margin-top: 9px;
+    overflow: hidden;
+}
+
+.result-bar {
+    height: 100%;
+    width: 0%;
+    background: #05FFC4;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.result-rank {
+    font-size: 0.7rem;
+    color: #8E9BB4;
+    margin-top: 6px;
+}
+
+.summary {
+    background: #1E2942;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 0.8rem;
+}
+
+.summary-label {
+    color: #8E9BB4;
+}
+
+.summary-value {
+    font-weight: bold;
+}
+
+/* =========================
+   MESSAGGI
+========================= */
+
+.error {
+    display: none;
+    background: rgba(255,70,70,0.12);
+    border: 1px solid rgba(255,70,70,0.3);
+    color: #ff8080;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   STAMPA
+========================= */
+
+@media print {
+
+    body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        padding: 0;
+    }
+
+    .container {
+        max-width: none;
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        border: none;
+    }
+
+    .btn-container,
+    .progress-box,
+    .error {
+        display: none !important;
+    }
+
+    h1,
+    .section-title {
+        color: #000000 !important;
+    }
+
+    input {
+        background: #F1F5F9 !important;
+        color: #000000 !important;
+    }
+
+    .match-info,
+    .summary,
+    .result-card {
+        background: #F8FAFC !important;
+        color: #000000 !important;
+        border: 1px solid #CBD5E1 !important;
+    }
+
+    .percentage {
+        color: #0F766E !important;
+    }
+
+    .result-bar-bg {
+        background: #E2E8F0 !important;
+    }
+
+    .result-bar {
+        background: #0F766E !important;
+    }
+
+    .summary-label,
+    .market-info,
+    .result-rank {
+        color: #475569 !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="panel-content">
+
+    <h1>⚽ Lux Match Predictor</h1>
+
+    <div id="errorBox" class="error"></div>
+
+    <!-- SQUADRE -->
+
+    <div class="section-title">🏆Squadre </div>
+
+    <div class="form-group">
+        <label for="teamHome">Squadra Casa</label>
+        <input type="text" id="teamHome" value="Squadra Casa">
+    </div>
+
+    <div class="form-group">
+        <label for="teamAway">Squadra Ospite</label>
+        <input type="text" id="teamAway" value="Squadra Ospite">
+    </div>
+
+    <!-- QUOTE -->
+
+    <div class="section-title">💰 Quote Sisal 1X2</div>
+
+    <div class="form-group">
+        <label for="odds1">Quota 1</label>
+        <input type="number" id="odds1" value="1.57" min="1.01" step="0.01">
+    </div>
+
+    <div class="form-group">
+        <label for="oddsX">Quota X</label>
+        <input type="number" id="oddsX" value="4.25" min="1.01" step="0.01">
+    </div>
+
+    <div class="form-group">
+        <label for="odds2">Quota 2</label>
+        <input type="number" id="odds2" value="6.50" min="1.01" step="0.01">
+    </div>
+
+    <!-- PULSANTI -->
+
+    <div class="btn-container">
+
+        <button
+            class="btn-submit"
+            id="calcBtn"
+            type="button">
+            🔎 Calcola Risultati Esatti
+        </button>
+
+        <button
+            class="btn-pdf"
+            id="pdfButton"
+            type="button"
+            disabled>
+            🖨️ Salva Report PDF
+        </button>
+
+    </div>
+
+    <!-- PROGRESSO -->
+
+    <div class="progress-box" id="progressBox">
+
+        <div class="progress-header">
+
+            <div class="progress-text" id="progressText">
+                Preparazione analisi...
+            </div>
+
+            <div class="progress-percent" id="progressPercent">
+                0%
+            </div>
+
+        </div>
+
+        <div class="progress-bar-bg">
+
+            <div
+                class="progress-bar-fill"
+                id="progressBarFill">
+            </div>
+
+        </div>
+
+        <div class="progress-status" id="progressStatus">
+            Avvio del calcolo...
+        </div>
+
+    </div>
+
+    <!-- RISULTATI -->
+
+    <div class="results-box" id="outputSection">
+
+        <div class="section-title">
+            🎯 Risultati Esatti Più Probabili
+        </div>
+
+        <div class="match-info">
+
+            <div class="match-teams" id="matchTeams">
+                Austria - Kosovo
+            </div>
+
+            <div class="market-info" id="marketInfo">
+                Probabilità derivate dalle quote inserite
+            </div>
+
+        </div>
+
+        <div id="resultsWrapper"></div>
+
+        <div class="summary">
+
+            <div class="summary-row">
+                <span class="summary-label">
+                    Probabilità 1
+                </span>
+
+                <span class="summary-value" id="probHome">
+                    -
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">
+                    Probabilità X
+                </span>
+
+                <span class="summary-value" id="probDraw">
+                    -
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">
+                    Probabilità 2
+                </span>
+
+                <span class="summary-value" id="probAway">
+                    -
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">
+                    Gol attesi casa
+                </span>
+
+                <span class="summary-value" id="expectedHome">
+                    -
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">
+                    Gol attesi ospite
+                </span>
+
+                <span class="summary-value" id="expectedAway">
+                    -
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ============================================
+   FUNZIONI MATEMATICHE
+============================================ */
+
+function fattoriale(n) {
+
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+
+    let risultato = 1;
+
+    for (let i = 2; i <= n; i++) {
+        risultato *= i;
+    }
+
+    return risultato;
+}
+
+
+function poissonFormula(lambda, k) {
+
+    return (
+        Math.pow(lambda, k) *
+        Math.exp(-lambda)
+    ) / fattoriale(k);
+
+}
+
+
+/* ============================================
+   ELEMENTI
+============================================ */
+
+const calcBtn = document.getElementById("calcBtn");
+const pdfButton = document.getElementById("pdfButton");
+
+const progressBox =
+    document.getElementById("progressBox");
+
+const progressBarFill =
+    document.getElementById("progressBarFill");
+
+const progressText =
+    document.getElementById("progressText");
+
+const progressPercent =
+    document.getElementById("progressPercent");
+
+const progressStatus =
+    document.getElementById("progressStatus");
+
+const outputSection =
+    document.getElementById("outputSection");
+
+const resultsWrapper =
+    document.getElementById("resultsWrapper");
+
+const errorBox =
+    document.getElementById("errorBox");
+
+
+/* ============================================
+   AVVIO
+============================================ */
+
+calcBtn.addEventListener("click", avviaCalcolo);
+
+pdfButton.addEventListener("click", salvaInPDF);
+
+
+/* ============================================
+   CONTROLLO DATI
+============================================ */
+
+function leggiDati() {
+
+    const casa =
+        document.getElementById("teamHome")
+        .value
+        .trim();
+
+    const ospite =
+        document.getElementById("teamAway")
+        .value
+        .trim();
+
+    const o1 =
+        parseFloat(
+            document.getElementById("odds1").value
+        );
+
+    const oX =
+        parseFloat(
+            document.getElementById("oddsX").value
+        );
+
+    const o2 =
+        parseFloat(
+            document.getElementById("odds2").value
+        );
+
+
+    if (!casa || !ospite) {
+
+        mostraErrore(
+            "Inserisci entrambe le squadre."
+        );
+
+        return null;
+    }
+
+
+    if (
+        !Number.isFinite(o1) ||
+        !Number.isFinite(oX) ||
+        !Number.isFinite(o2) ||
+        o1 <= 1 ||
+        oX <= 1 ||
+        o2 <= 1
+    ) {
+
+        mostraErrore(
+            "Le quote devono essere numeri maggiori di 1.00."
+        );
+
+        return null;
+    }
+
+
+    nascondiErrore();
+
+
+    return {
+        casa,
+        ospite,
+        o1,
+        oX,
+        o2
+    };
+
+}
+
+
+/* ============================================
+   ERRORE
+============================================ */
+
+function mostraErrore(messaggio) {
+
+    errorBox.innerText = messaggio;
+    errorBox.style.display = "block";
+
+}
+
+
+function nascondiErrore() {
+
+    errorBox.style.display = "none";
+
+}
+
+
+/* ============================================
+   BARRA DI PROGRESSO
+============================================ */
+
+function avviaCalcolo() {
+
+    const dati = leggiDati();
+
+    if (!dati) {
+        return;
+    }
+
+
+    outputSection.style.display = "none";
+
+    pdfButton.disabled = true;
+
+    calcBtn.disabled = true;
+
+    progressBox.style.display = "block";
+
+    progressBarFill.style.width = "0%";
+
+    progressPercent.innerText = "0%";
+
+    progressText.innerText =
+        "Preparazione analisi...";
+
+    progressStatus.innerText =
+        "Avvio del calcolo...";
+
+
+    let percentuale = 0;
+
+
+    const timer = setInterval(function() {
+
+        percentuale += 2;
+
+        if (percentuale > 100) {
+            percentuale = 100;
+        }
+
+
+        progressBarFill.style.width =
+            percentuale + "%";
+
+        progressPercent.innerText =
+            percentuale + "%";
+
+
+        /* Testi durante l'avanzamento */
+
+        if (percentuale < 20) {
+
+            progressText.innerText =
+                "Analisi delle quote...";
+
+            progressStatus.innerText =
+                "Calcolo delle probabilità implicite...";
+
+        }
+
+        else if (percentuale < 40) {
+
+            progressText.innerText =
+                "Normalizzazione delle quote...";
+
+            progressStatus.innerText =
+                "Eliminazione del margine del bookmaker...";
+
+        }
+
+        else if (percentuale < 60) {
+
+            progressText.innerText =
+                "Modello dei gol...";
+
+            progressStatus.innerText =
+                "Stima dei gol attesi...";
+
+        }
+
+        else if (percentuale < 80) {
+
+            progressText.innerText =
+                "Generazione risultati...";
+
+            progressStatus.innerText =
+                "Calcolo delle combinazioni 0-0 / 4-4...";
+
+        }
+
+        else if (percentuale < 100) {
+
+            progressText.innerText =
+                "Ordinamento risultati...";
+
+            progressStatus.innerText =
+                "Selezione dei punteggi più probabili...";
+
+        }
+
+        else {
+
+            progressText.innerText =
+                "Analisi completata";
+
+            progressStatus.innerText =
+                "Risultati pronti.";
+
+        }
+
+
+        if (percentuale >= 100) {
+
+            clearInterval(timer);
+
+            setTimeout(function() {
+
+                progressBox.style.display = "none";
+
+                calcBtn.disabled = false;
+
+                eseguiCalcoloMatematico(dati);
+
+            }, 350);
+
+        }
+
+    }, 35);
+
+}
+
+
+/* ============================================
+   CALCOLO
+============================================ */
+
+function eseguiCalcoloMatematico(dati) {
+
+    const casa = dati.casa;
+    const ospite = dati.ospite;
+
+    const o1 = dati.o1;
+    const oX = dati.oX;
+    const o2 = dati.o2;
+
+
+    /*
+       Probabilità implicite dalle quote
+    */
+
+    const p1Raw = 1 / o1;
+    const pXRaw = 1 / oX;
+    const p2Raw = 1 / o2;
+
+    const totaleTabellone =
+        p1Raw + pXRaw + p2Raw;
+
+
+    /*
+       Normalizzazione
+    */
+
+    const prob1 =
+        p1Raw / totaleTabellone;
+
+    const probX =
+        pXRaw / totaleTabellone;
+
+    const prob2 =
+        p2Raw / totaleTabellone;
+
+
+    /*
+       Stima semplice dei gol attesi.
+
+       NON è una previsione certa:
+       viene ricavata dalle quote 1X2.
+    */
+
+    let golAttesiCasa;
+    let golAttesiOspite;
+
+
+    if (prob1 > 0.50) {
+
+        golAttesiCasa =
+            1.60 + (prob1 * 0.80);
+
+        golAttesiOspite =
+            0.90 - (prob1 * 0.40);
+
+    }
+
+    else if (prob2 > 0.50) {
+
+        golAttesiCasa =
+            0.90 - (prob2 * 0.40);
+
+        golAttesiOspite =
+            1.60 + (prob2 * 0.80);
+
+    }
+
+    else {
+
+        golAttesiCasa =
+            1.20 + (prob1 * 0.30);
+
+        golAttesiOspite =
+            1.20 + (prob2 * 0.30);
+
+    }
+
+
+    /*
+       Evita valori troppo bassi.
+    */
+
+    golAttesiCasa =
+        Math.max(0.15, golAttesiCasa);
+
+    golAttesiOspite =
+        Math.max(0.15, golAttesiOspite);
+
+
+    /*
+       Generazione punteggi 0-0 fino a 4-4
+    */
+
+    let combinazioni = [];
+
+    let sommaTotaleProb = 0;
+
+
+    for (let c = 0; c <= 4; c++) {
+
+        for (let o = 0; o <= 4; o++) {
+
+            const pC =
+                poissonFormula(
+                    golAttesiCasa,
+                    c
+                );
+
+            const pO =
+                poissonFormula(
+                    golAttesiOspite,
+                    o
+                );
+
+            const probIncrociata =
+                pC * pO;
+
+
+            combinazioni.push({
+
+                casa: c,
+
+                ospite: o,
+
+                punteggio:
+                    `${c} - ${o}`,
+
+                valoreProb:
+                    probIncrociata
+
+            });
+
+
+            sommaTotaleProb +=
+                probIncrociata;
+
+        }
+
+    }
+
+
+    /*
+       Normalizzazione dei risultati
+    */
+
+    combinazioni =
+        combinazioni.map(function(item) {
+
+            return {
+
+                ...item,
+
+                probabilita:
+                    item.valoreProb /
+                    sommaTotaleProb
+
+            };
+
+        });
+
+
+    /*
+       Ordina dal più probabile
+       al meno probabile
+    */
+
+    combinazioni.sort(function(a, b) {
+
+        return b.probabilita -
+               a.probabilita;
+
+    });
+
+
+    /*
+       Prendiamo i primi 8
+    */
+
+    const risultati =
+        combinazioni.slice(0, 8);
+
+
+    /*
+       Aggiorna interfaccia
+    */
+
+    document.getElementById("matchTeams")
+        .innerText =
+        casa + "  -  " + ospite;
+
+
+    document.getElementById("probHome")
+        .innerText =
+        formatPercent(prob1);
+
+
+    document.getElementById("probDraw")
+        .innerText =
+        formatPercent(probX);
+
+
+    document.getElementById("probAway")
+        .innerText =
+        formatPercent(prob2);
+
+
+    document.getElementById("expectedHome")
+        .innerText =
+        golAttesiCasa.toFixed(2);
+
+
+    document.getElementById("expectedAway")
+        .innerText =
+        golAttesiOspite.toFixed(2);
+
+
+    /*
+       Generazione card
+    */
+
+    resultsWrapper.innerHTML = "";
+
+
+    risultati.forEach(function(item, index) {
+
+        const percentuale =
+            item.probabilita * 100;
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "result-card";
+
+
+        card.innerHTML = `
+
+            <div class="result-top">
+
+                <div class="score">
+                    ${item.punteggio}
+                </div>
+
+                <div class="percentage">
+                    ${percentuale.toFixed(2)}%
+                </div>
+
+            </div>
+
+            <div class="result-bar-bg">
+
+                <div
+                    class="result-bar"
+                    style="width:${Math.min(percentuale * 5, 100)}%">
+                </div>
+
+            </div>
+
+            <div class="result-rank">
+                Posizione ${index + 1}
+            </div>
+
+        `;
+
+
+        resultsWrapper.appendChild(card);
+
+    });
+
+
+    /*
+       Mostra risultati
+    */
+
+    outputSection.style.display = "block";
+
+    pdfButton.disabled = false;
+
+
+    /*
+       Porta l'utente ai risultati
+    */
+
+    setTimeout(function() {
+
+        outputSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 150);
+
+}
+
+
+/* =======
